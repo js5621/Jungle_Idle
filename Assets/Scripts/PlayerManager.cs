@@ -18,17 +18,21 @@ public class PlayerManager : MonoBehaviour
     public bool isPlayerSequenceOn = false;
     public bool isPlayerSequenceOff = false;
 
-    public bool isAttackSequenceOn = false; 
-    public bool isAttaking =false;
-    public bool isAttackSequenceOff = false;    
+    public bool isAttackSequenceOn = false;
+    public bool isAttaking = false;
+    public bool isAttackSequenceOff = false;
 
     public Vector3 tempVector = Vector3.zero;
     public Vector3 destinationVector;
+    public Vector2 moveTarget;
 
     public GameObject skillObject;
-
+    
+    
+    public float moveableDistance = 10.0f;
     private RandomPointGenerator randomPointGenerator;
     private FieldStandardBattleController fieldSBattleController;
+    private FiedMonsterController fiedMonsterController;
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
     FieldGameOperator fieldGameOperator;
@@ -36,11 +40,11 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         fieldGameOperator = FindAnyObjectByType<FieldGameOperator>();
-        // 랜덤 범위를 설정 
+        fiedMonsterController = FindAnyObjectByType<FiedMonsterController>();   
         randomPointGenerator = FindAnyObjectByType<RandomPointGenerator>();
         playerAnimator = GetComponent<Animator>();
-        fieldSBattleController = FindAnyObjectByType<FieldStandardBattleController>();
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        //fieldSBattleController = FindAnyObjectByType<FieldStandardBattleController>();
+        //playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
 
 
@@ -50,19 +54,46 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     async void Update()
     {
-        if (isPlayerSequenceOn)
-        {
-            await OnRandomMove();
-        }
+        MoveAttackSequence();
+       
 
-        if(isAttackSequenceOn)
-        {
-            await PlayerAttack();
-        }
-        //랜덤 범위 안에서 움직인다. 
     }
 
+    public async void MoveAttackSequence()
+    {
+        if (fiedMonsterController == null)
+        {
+            fiedMonsterController = FindAnyObjectByType<FiedMonsterController>();
+        }
+        if (Vector2.Distance(fiedMonsterController.transform.position, transform.position) > moveableDistance)
+        {
+            if (transform.position.x - fiedMonsterController.transform.position.x >0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = transform.localScale * 1.7f;
+            }
+            else if (transform.position.x - fiedMonsterController.transform.position.x <0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = transform.localScale * 1.7f;
+            }
 
+            float step = playercharSpeed * Time.deltaTime;
+            moveTarget = fiedMonsterController.transform.position;
+            playerAnimator.SetBool("IsWalk", true);// move sprite towards the target location
+            transform.position = Vector2.MoveTowards(transform.position, moveTarget, step);
+        }
+
+        else
+        {
+            if (this.transform != null)
+            {
+                playerAnimator.SetBool("IsWalk", false);// move sprite towards the target location
+                await PlayerAttack();
+            }
+
+        }
+    }
     async UniTask OnRandomMove()
     {
         Vector3 randomVector;
@@ -97,12 +128,13 @@ public class PlayerManager : MonoBehaviour
         transform.localScale = new Vector3(-1, 1, 1);
         transform.localScale = transform.localScale * 1.7f;
         await FadeIn();
+
         await UniTask.Delay(100);
         isAttackSequenceOn = true;
-    
 
 
-}
+
+    }
 
     async UniTask FadeIn()
     {
@@ -138,9 +170,9 @@ public class PlayerManager : MonoBehaviour
 
     async UniTask PlayerAttack()
     {
-        
 
-        if(isAttaking)
+
+        if (isAttaking)
         {
             return;
         }
@@ -152,7 +184,7 @@ public class PlayerManager : MonoBehaviour
         await UniTask.Delay(1000);
         skillObject.SetActive(false);
         await UniTask.Delay(100);
-        isAttaking= false;
+        isAttaking = false;
 
 
         //await FadeOut();

@@ -11,6 +11,7 @@ public class MonsterSpawnController : MonoBehaviour
 
     public bool isMonsterSpawnerOn = false;
     public bool isMonsterSpawnerOff=false;
+    public bool isSpawning =false;
     Vector3 randomVector;
     private GameObject tempSpawnObject;
     void Start()
@@ -24,10 +25,9 @@ public class MonsterSpawnController : MonoBehaviour
     // Update is called once per frame
     async void Update()
     {
-        if(isMonsterSpawnerOn)
-        {
-            await MonsterSpawn();
-        }
+       
+        await MonsterSpawn();
+        
         
     }
 
@@ -36,15 +36,20 @@ public class MonsterSpawnController : MonoBehaviour
 
         Vector2 playerMoveVector;
         isMonsterSpawnerOn =false;
+        if (isSpawning)
+        {
+            return;
+        }
+
         randomVector = randomPointGenerator.RandomVectorArray[Random.Range(0, randomPointGenerator.RandomVectorArray.Length)];
         await UniTask.Delay(1000);
-        tempSpawnObject = Instantiate(spawnSkeletonPrefab, randomVector, Quaternion.identity);
+        var tempSpawnObject = ObjectPoolingController.GetMonsterObject();
         playerMoveVector = new Vector2(tempSpawnObject.transform.position.x + 1.0f, tempSpawnObject.transform.position.y);
         await UniTask.Delay(500);
         playerManager.destinationVector = playerMoveVector;
         await UniTask.Delay(500);
         isMonsterSpawnerOff = true;
-        fieldGameOperator.OperateProcess();
+        isSpawning =true;
 
         
        
