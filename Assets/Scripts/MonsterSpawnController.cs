@@ -6,6 +6,7 @@ public class MonsterSpawnController : MonoBehaviour
     private RandomPointGenerator randomPointGenerator;
     private FieldGameOperator fieldGameOperator;
     PlayerManager playerManager;
+    private BossGenerateController bossController;
     public GameObject spawnGoblinPrefab;
     public GameObject spawnSkeletonPrefab;
 
@@ -13,44 +14,44 @@ public class MonsterSpawnController : MonoBehaviour
     public bool isMonsterSpawnerOff=false;
     public bool isSpawning =false;
     Vector3 randomVector;
-    private GameObject tempSpawnObject;
+    public GameObject[] monsterSpawnObject;
+
     void Start()
     {
         randomPointGenerator = FindAnyObjectByType<RandomPointGenerator>();
         fieldGameOperator = FindAnyObjectByType<FieldGameOperator>();
         playerManager = FindAnyObjectByType<PlayerManager>();
+        bossController = FindAnyObjectByType<BossGenerateController>();
 
     }
 
     // Update is called once per frame
     async void Update()
     {
-       
-        await MonsterSpawn();
+        if(!bossController.isBossTime)
+        {
+            await MonsterSpawn();
+        }
+        
         
         
     }
 
     async UniTask MonsterSpawn()
     {
-
-        Vector2 playerMoveVector;
-        isMonsterSpawnerOn =false;
+        int waitTime = 500;
+     
         if (isSpawning)
         {
             return;
         }
 
-        randomVector = randomPointGenerator.RandomVectorArray[Random.Range(0, randomPointGenerator.RandomVectorArray.Length)];
-        await UniTask.Delay(1000);
-        var tempSpawnObject = ObjectPoolingController.GetMonsterObject();
-        playerMoveVector = new Vector2(tempSpawnObject.transform.position.x + 1.0f, tempSpawnObject.transform.position.y);
-        await UniTask.Delay(500);
-        playerManager.destinationVector = playerMoveVector;
-        await UniTask.Delay(500);
-        isMonsterSpawnerOff = true;
+        Vector2 monsterSpawnPoint = Vector2.zero + Random.insideUnitCircle*10;
         isSpawning =true;
+        Instantiate(monsterSpawnObject[Random.Range(0,2)], monsterSpawnPoint,Quaternion.identity);
+        await UniTask.Delay(1700);
 
+        isSpawning=false;
         
        
         

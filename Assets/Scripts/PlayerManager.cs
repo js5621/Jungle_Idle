@@ -17,32 +17,45 @@ public class PlayerManager : MonoBehaviour
     public bool isPlayerMoveEnd = false;
     public bool isPlayerSequenceOn = false;
     public bool isPlayerSequenceOff = false;
-
     public bool isAttackSequenceOn = false;
     public bool isAttaking = false;
     public bool isAttackSequenceOff = false;
+    public bool isPlayerBossBattleMode = false;
 
     public Vector3 tempVector = Vector3.zero;
     public Vector3 destinationVector;
     public Vector2 moveTarget;
+    Vector3 initialPlayerLocalScale;
 
     public GameObject skillObject;
-    
-    
-    public float moveableDistance = 10.0f;
+    private GameObject SearchObject;
+
+    public float moveableDistance = 1.0f;
     private RandomPointGenerator randomPointGenerator;
     private FieldStandardBattleController fieldSBattleController;
     private FiedMonsterController fiedMonsterController;
+
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
     FieldGameOperator fieldGameOperator;
+    EnemySearchController enemySearchController;
+    BossGenerateController bossGenerateController;
+    GameUIController gameUIController;
+    BossBattleSquenceController bossBattleSquenceController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fieldGameOperator = FindAnyObjectByType<FieldGameOperator>();
-        fiedMonsterController = FindAnyObjectByType<FiedMonsterController>();   
+        fiedMonsterController = FindAnyObjectByType<FiedMonsterController>();
         randomPointGenerator = FindAnyObjectByType<RandomPointGenerator>();
+        enemySearchController = FindAnyObjectByType<EnemySearchController>();
+        bossGenerateController = FindAnyObjectByType<BossGenerateController>();
+        bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
+        gameUIController = FindAnyObjectByType<GameUIController>();
         playerAnimator = GetComponent<Animator>();
+        moveableDistance = 1.5f;
+        initialPlayerLocalScale = transform.localScale;
+        
         //fieldSBattleController = FindAnyObjectByType<FieldStandardBattleController>();
         //playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -55,37 +68,73 @@ public class PlayerManager : MonoBehaviour
     async void Update()
     {
         MoveAttackSequence();
-       
+
 
     }
 
     public async void MoveAttackSequence()
     {
-        if (fiedMonsterController == null)
+
+        if (enemySearchController.isEnemyNull(SearchObject))
         {
-            fiedMonsterController = FindAnyObjectByType<FiedMonsterController>();
+
+            Debug.Log("서치 시퀀스 체크");
+
+            SearchObject = enemySearchController.FoundEnemy();
+
+
+            if (SearchObject == null)
+            {
+                return;
+            }
+
         }
-        if (Vector2.Distance(fiedMonsterController.transform.position, transform.position) > moveableDistance)
+
+        playercharSpeed = 3;
+
+        if (SearchObject.gameObject.tag.Equals("Boss"))// 보스가 나타났을때
         {
-            if (transform.position.x - fiedMonsterController.transform.position.x >0)
+            if (!isPlayerBossBattleMode)
+            {
+                return;
+
+            }
+            else
+            {
+                moveableDistance = 2.0f;
+                await gameUIController.BattleBossUISetOn();
+            }
+
+        }
+        if (Vector2.Distance(SearchObject.transform.position, transform.position) > moveableDistance)
+        {
+
+            if (transform.position.x - SearchObject.transform.position.x > 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
-                transform.localScale = transform.localScale * 1.7f;
+                transform.localScale = transform.localScale * initialPlayerLocalScale.x;
             }
-            else if (transform.position.x - fiedMonsterController.transform.position.x <0)
+            else if (transform.position.x - SearchObject.transform.position.x < 0)
             {
                 transform.localScale = new Vector3(1, 1, 1);
-                transform.localScale = transform.localScale * 1.7f;
+                transform.localScale = transform.localScale * initialPlayerLocalScale.x;
             }
 
             float step = playercharSpeed * Time.deltaTime;
-            moveTarget = fiedMonsterController.transform.position;
+            moveTarget = SearchObject.transform.position;
             playerAnimator.SetBool("IsWalk", true);// move sprite towards the target location
             transform.position = Vector2.MoveTowards(transform.position, moveTarget, step);
         }
 
         else
         {
+            //if (isPlayerBossBattleMode)
+            //{
+            //    await gameUIController.BattleBossUISetOn();
+            //}
+
+            Debug.Log("플레이어기준 배틀거리 :" + moveableDistance);
+            playercharSpeed = 0;
             if (this.transform != null)
             {
                 playerAnimator.SetBool("IsWalk", false);// move sprite towards the target location
@@ -170,16 +219,27 @@ public class PlayerManager : MonoBehaviour
 
     async UniTask PlayerAttack()
     {
+        if (isPlayerBossBattleMode)
+        {
+            bossBattleSquenceController.PlayerArrivalCheck(true);
+        }
+        
+        if(!bossBattleSquenceController.isBattleStartCondition()&&isPlayerBossBattleMode)
+        {
+            return;
+        }
 
-
+        
+       
         if (isAttaking)
         {
             return;
         }
+        
         isAttaking = true;
         Debug.Log("반복체크 중");
         playerAnimator.SetTrigger("Attack1");
-        await UniTask.Delay(100);
+        await UniTask.Delay(300);
         skillObject.SetActive(true);
         await UniTask.Delay(1000);
         skillObject.SetActive(false);

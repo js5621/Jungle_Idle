@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 1384b5664b08cc84e8d7a5998dd6e060
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3224111340313633024
+    second: Retro Style Basic Mobile Game UI_0
+  - first:
+      213: 2019247026288000434
+    second: Retro Style Basic Mobile Game UI_1
+  - first:
+      213: -9216374503837589952
+    second: Retro Style Basic Mobile Game UI_2
+  - first:
+      213: 7483714159369676912
+    second: Retro Style Basic Mobile Game UI_3
+  - first:
+      213: 4572440779653710561
+    second: Retro Style Basic Mobile Game UI_4
+  - first:
+      213: 2818888695798826770
+    second: Retro Style Basic Mobile Game UI_5
+  - first:
+      213: -7374379366613713771
+    second: Retro Style Basic Mobile Game UI_6
+  - first:
+      213: -7147406204478255421
+    second: Retro Style Basic Mobile Game UI_7
+  - first:
+      213: 7933133668239141053
+    second: Retro Style Basic Mobile Game UI_8
+  - first:
+      213: -3519276725657396021
+    second: Retro Style Basic Mobile Game UI_9
+  - first:
+      213: 8734635733589427822
+    second: Retro Style Basic Mobile Game UI_10
+  - first:
+      213: 1339736489869333859
+    second: Retro Style Basic Mobile Game UI_11
+  - first:
+      213: -3805039766977249634
+    second: Retro Style Basic Mobile Game UI_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 589
+        width: 461
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 001e3b39e285ebc20800000000000000
+      internalID: 3224111340313633024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_1
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 589
+        width: 461
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bdf8a3d87ec50c10800000000000000
+      internalID: 2019247026288000434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_2
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 22
+        width: 907
+        height: 669
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e1bcd183cd81080800000000000000
+      internalID: -9216374503837589952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 480
+        width: 461
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0786ac5a06e7bd760800000000000000
+      internalID: 7483714159369676912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_4
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 480
+        width: 362
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e205cbc9a2947f30800000000000000
+      internalID: 4572440779653710561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_5
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 368
+        width: 461
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 217047e6554be1720800000000000000
+      internalID: 2818888695798826770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_6
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 369
+        width: 362
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59cf4068901f8a990800000000000000
+      internalID: -7374379366613713771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_7
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 263
+        width: 461
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ce86a4fcef4fcc90800000000000000
+      internalID: -7147406204478255421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_8
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 252
+        width: 362
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db8e51b2a07281e60800000000000000
+      internalID: 7933133668239141053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_9
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 153
+        width: 497
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc14e4c674092fc0800000000000000
+      internalID: -3519276725657396021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_10
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 52
+        width: 504
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e66080febe8a73970800000000000000
+      internalID: 8734635733589427822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_11
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 149
+        width: 362
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3655a434d33b79210800000000000000
+      internalID: 1339736489869333859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Retro Style Basic Mobile Game UI_12
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 46
+        width: 362
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9ef51ded78c13bc0800000000000000
+      internalID: -3805039766977249634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 74a640958aa0d09499221fe10be9f148
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Retro Style Basic Mobile Game UI_0: 3224111340313633024
+      Retro Style Basic Mobile Game UI_1: 2019247026288000434
+      Retro Style Basic Mobile Game UI_10: 8734635733589427822
+      Retro Style Basic Mobile Game UI_11: 1339736489869333859
+      Retro Style Basic Mobile Game UI_12: -3805039766977249634
+      Retro Style Basic Mobile Game UI_2: -9216374503837589952
+      Retro Style Basic Mobile Game UI_3: 7483714159369676912
+      Retro Style Basic Mobile Game UI_4: 4572440779653710561
+      Retro Style Basic Mobile Game UI_5: 2818888695798826770
+      Retro Style Basic Mobile Game UI_6: -7374379366613713771
+      Retro Style Basic Mobile Game UI_7: -7147406204478255421
+      Retro Style Basic Mobile Game UI_8: 7933133668239141053
+      Retro Style Basic Mobile Game UI_9: -3519276725657396021
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
