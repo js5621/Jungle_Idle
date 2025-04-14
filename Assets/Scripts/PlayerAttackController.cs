@@ -18,21 +18,21 @@ public class PlayerAttackController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag.Equals("Enemy") )
+        if (collision.tag.Equals("Enemy"))
         {
             Debug.Log("공격 연출 발사");
             Vector2 emissionPosition = (Vector2)collision.transform.position;
-            Vector2 damageTextPosition = (Vector2)collision.transform.position+ new Vector2(0,0.5f);
-           
-            tmpParticleObject = Instantiate(monsterAtkParticlePrefab, emissionPosition , Quaternion.identity);
+            Vector2 damageTextPosition = (Vector2)collision.transform.position + new Vector2(0, 0.5f);
+
+            tmpParticleObject = Instantiate(monsterAtkParticlePrefab, emissionPosition, Quaternion.identity);
             tmpParticleObject.GetComponent<ParticleSystem>().Play();
-            tmpTmProPrefab = Instantiate(attackDamageTmPro,damageTextPosition , Quaternion.identity);
-            
+            tmpTmProPrefab = Instantiate(attackDamageTmPro, damageTextPosition, Quaternion.identity);
+
             Destroy(tmpParticleObject, 1f);
-            Destroy(tmpTmProPrefab,1f);
+            Destroy(tmpTmProPrefab, 1f);
         }
 
-        if(collision.tag.Equals("Boss"))
+        if (collision.tag.Equals("Boss"))
         {
             Debug.Log("공격 연출 발사");
             Vector2 emissionPosition = (Vector2)collision.transform.position;
@@ -40,7 +40,7 @@ public class PlayerAttackController : MonoBehaviour
 
             tmpParticleObject = Instantiate(bossAtkParticlePrefab, emissionPosition, Quaternion.identity);
             tmpParticleObject.GetComponent<ParticleSystem>().Play();
-            tmpTmProPrefab = Instantiate(attackDamageTmPro, damageTextPosition+new Vector2(0,2f), Quaternion.identity);
+            tmpTmProPrefab = Instantiate(attackDamageTmPro, damageTextPosition + new Vector2(0, 2f), Quaternion.identity);
             gameUIController.BossHPUIDamgage();
             Destroy(tmpParticleObject, 1f);
             Destroy(tmpTmProPrefab, 1f);

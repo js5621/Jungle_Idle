@@ -32,9 +32,9 @@ public class BossGenerateController : MonoBehaviour
         isBossSpawn = true;
         await ShowBossAppearText();
         isBossTime = true;
-        Instantiate(bossMobPrfab,gamePlayer.transform.position+bossVectorOffset, Quaternion.identity);
-        
-        
+        Instantiate(bossMobPrfab, gamePlayer.transform.position + bossVectorOffset, Quaternion.identity);
+
+
 
 
 
@@ -62,5 +62,5 @@ public class BossGenerateController : MonoBehaviour
 
     }
 
-    
+
 }

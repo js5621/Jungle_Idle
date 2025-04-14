@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
     BossGenerateController bossGenerateController;
     GameUIController gameUIController;
     BossBattleSquenceController bossBattleSquenceController;
+    GameFlowController gameFlowController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,11 +52,12 @@ public class PlayerManager : MonoBehaviour
         enemySearchController = FindAnyObjectByType<EnemySearchController>();
         bossGenerateController = FindAnyObjectByType<BossGenerateController>();
         bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
+        gameFlowController = FindAnyObjectByType<GameFlowController>();
         gameUIController = FindAnyObjectByType<GameUIController>();
         playerAnimator = GetComponent<Animator>();
         moveableDistance = 1.5f;
         initialPlayerLocalScale = transform.localScale;
-        
+
         //fieldSBattleController = FindAnyObjectByType<FieldStandardBattleController>();
         //playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -74,6 +76,11 @@ public class PlayerManager : MonoBehaviour
 
     public async void MoveAttackSequence()
     {
+
+        if (gameFlowController.gameState != GameFlowState.Field)
+        {
+            return;
+        }
 
         if (enemySearchController.isEnemyNull(SearchObject))
         {
@@ -223,27 +230,27 @@ public class PlayerManager : MonoBehaviour
         {
             bossBattleSquenceController.PlayerArrivalCheck(true);
         }
-        
-        if(!bossBattleSquenceController.isBattleStartCondition()&&isPlayerBossBattleMode)
+
+        if (!bossBattleSquenceController.isBattleStartCondition() && isPlayerBossBattleMode)
         {
             return;
         }
 
-        
-       
+
+
         if (isAttaking)
         {
             return;
         }
-        
+
         isAttaking = true;
         Debug.Log("반복체크 중");
         playerAnimator.SetTrigger("Attack1");
         await UniTask.Delay(300);
         skillObject.SetActive(true);
-        await UniTask.Delay(1000);
+        await UniTask.Delay(800);
         skillObject.SetActive(false);
-        await UniTask.Delay(100);
+        await UniTask.Delay(800);
         isAttaking = false;
 
 

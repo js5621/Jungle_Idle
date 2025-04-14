@@ -40,8 +40,9 @@ public class BossMoveController : MonoBehaviour
 
     async UniTask BossAttack()
     {
+        
         bossBattleSquenceController.BossWatchPlayerCheck(true);
-        if(!bossBattleSquenceController.isBattleStartCondition())
+        if(!bossBattleSquenceController.isBattleStartCondition()||this.gameObject ==null)
         {
             return;
         }
@@ -72,5 +73,13 @@ public class BossMoveController : MonoBehaviour
             Debug.Log("충돌 감지 확인");
            
         }
+    }
+
+    public void KillBoss()
+    {
+        bossAnimator.SetTrigger("Die");
+        this.gameObject.SetActive(false);
+        bossBattleSquenceController.BossWatchPlayerCheck(false);
+        Destroy(this.gameObject, 2f);
     }
 }

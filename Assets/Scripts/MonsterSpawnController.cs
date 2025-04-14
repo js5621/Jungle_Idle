@@ -15,26 +15,27 @@ public class MonsterSpawnController : MonoBehaviour
     public bool isSpawning =false;
     Vector3 randomVector;
     public GameObject[] monsterSpawnObject;
-
+    GameFlowController gameFlowController;
     void Start()
     {
         randomPointGenerator = FindAnyObjectByType<RandomPointGenerator>();
         fieldGameOperator = FindAnyObjectByType<FieldGameOperator>();
         playerManager = FindAnyObjectByType<PlayerManager>();
         bossController = FindAnyObjectByType<BossGenerateController>();
-
+        gameFlowController = FindAnyObjectByType<GameFlowController>();
     }
 
     // Update is called once per frame
     async void Update()
     {
-        if(!bossController.isBossTime)
+
+        if (!bossController.isBossTime && gameFlowController.gameState == GameFlowState.Field)
         {
             await MonsterSpawn();
         }
-        
-        
-        
+
+
+
     }
 
     async UniTask MonsterSpawn()
@@ -49,7 +50,7 @@ public class MonsterSpawnController : MonoBehaviour
         Vector2 monsterSpawnPoint = Vector2.zero + Random.insideUnitCircle*10;
         isSpawning =true;
         Instantiate(monsterSpawnObject[Random.Range(0,2)], monsterSpawnPoint,Quaternion.identity);
-        await UniTask.Delay(1700);
+        await UniTask.Delay(2500);
 
         isSpawning=false;
         

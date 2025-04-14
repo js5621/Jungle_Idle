@@ -1,21 +1,30 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     GameUIController gameUIController;
+    BossMoveController bossMoveController;
+    BossGenerateController bossGenerateController;
+    GameFlowController gameFlowController;
+    
+    bool isBossDieSequenceOn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameUIController = FindAnyObjectByType<GameUIController>();
+        
+        bossGenerateController = FindAnyObjectByType<BossGenerateController>();
+        gameFlowController = FindAnyObjectByType<GameFlowController>();
     }
 
     // Update is called once per frame
-    void Update()
+    async void Update()
     {
         if (gameUIController.isTimeOver())
         {
-            Time.timeScale = 0f;
-            Debug.Log("게임 오버");
+
+            
         }
 
         else
@@ -23,9 +32,30 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
             if (gameUIController.isBossHpOver())
             {
-                Time.timeScale = 0f;
-                Debug.Log("유저승리");
+                await BossDieSequence();
             }
         }
     }
+
+    async UniTask BossDieSequence()
+    {
+
+        if (isBossDieSequenceOn)
+        {
+            return;
+        }
+        isBossDieSequenceOn =true;
+        
+        bossMoveController = FindAnyObjectByType<BossMoveController>();
+        bossMoveController.KillBoss();
+        gameUIController.BattleBossUISetOff();
+        await UniTask.Delay(2000);
+        bossGenerateController.isBossTime =false;
+        gameFlowController.gameState =GameFlowState.Ready;
+        bossGenerateController.isBossTime = false;
+        bossGenerateController.isBossSpawn = false;
+
+
+    }
+
 }

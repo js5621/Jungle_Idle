@@ -34,6 +34,8 @@ public class BossBattleSquenceController : MonoBehaviour
 
 
     }
+    
+    
 
     public void BossWatchPlayerCheck(bool setWatch)
     {
