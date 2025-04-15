@@ -38,7 +38,7 @@ public class StageControl : MonoBehaviour
         await UniTask.Delay(2000);
         startUIPanel.SetActive(false);
 
-        gameFlowController.SetGameState(GameFlowState.Field);
+        gameFlowController.gameState = GameFlowState.Field;
         await UniTask.Delay(1000);
         isStagePanelOn=false;
 

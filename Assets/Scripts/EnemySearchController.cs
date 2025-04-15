@@ -30,7 +30,8 @@ public class EnemySearchController : MonoBehaviour
             if(bossController == null)
             {
                 
-                return FindAnyObjectByType<BossMoveController>().gameObject;
+                return null;    
+                //return FindAnyObjectByType<BossMoveController>().gameObject;
             }
             else
             {

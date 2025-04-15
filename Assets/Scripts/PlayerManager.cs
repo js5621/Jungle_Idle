@@ -76,12 +76,12 @@ public class PlayerManager : MonoBehaviour
 
     public async void MoveAttackSequence()
     {
-
+        
         if (gameFlowController.gameState != GameFlowState.Field)
         {
             return;
         }
-
+        
         if (enemySearchController.isEnemyNull(SearchObject))
         {
 

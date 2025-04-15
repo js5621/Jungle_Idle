@@ -12,15 +12,18 @@ public class BossMoveController : MonoBehaviour
     public int Hp =1000;
     PlayerManager playerManager;
     BossBattleSquenceController bossBattleSquenceController;
+    GameUIController gameUIController;
     private bool isAttacking= false;
+    bool isBossDying =false;
     public GameObject bossAtkObject;
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isBossAppeared=true;
         bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
         bossBattleSquenceController.SequnceBossToCamera();
+        gameUIController = FindAnyObjectByType<GameUIController>();
         playerManager =FindAnyObjectByType<PlayerManager>();
         bossAnimator = GetComponent<Animator>();
 
@@ -33,7 +36,15 @@ public class BossMoveController : MonoBehaviour
     {
         if (Vector2.Distance(playerManager.gameObject.transform.position, transform.position) < attackDistance)
         {
-            await BossAttack();
+            if(!gameUIController.isBossHpOver())
+            {
+                await BossAttack();
+            }
+            else
+            {
+                await BossDieSequence();
+            }
+            
         }
 
     }
@@ -75,10 +86,29 @@ public class BossMoveController : MonoBehaviour
         }
     }
 
-    public void KillBoss()
+    async UniTask BossDieSequence()
     {
+        if(this.gameObject ==null)
+        { 
+            return;
+        }
+        if(isBossDying)
+        {
+            return;
+        }
+        isBossDying = true;
         bossAnimator.SetTrigger("Die");
+        gameUIController.BattleBossUISetOff();
+        await UniTask.Delay(1000);
         this.gameObject.SetActive(false);
+        if (gameUIController.isTimeOver())
+        {
+            bossBattleSquenceController.isPlayerWin = false;
+        }
+        else if (gameUIController.isBossHpOver())
+        {
+            bossBattleSquenceController.isPlayerWin =true;
+        }
         bossBattleSquenceController.BossWatchPlayerCheck(false);
         Destroy(this.gameObject, 2f);
     }
