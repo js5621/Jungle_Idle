@@ -5,7 +5,7 @@ public class EnemySearchController : MonoBehaviour
     FiedMonsterController enemyContoller;
     BossMoveController bossController;
 
-   
+
     public bool isEnemyNull(GameObject enemy)
     {
         if (enemy == null)
@@ -20,32 +20,32 @@ public class EnemySearchController : MonoBehaviour
 
     }
     public GameObject FoundEnemy()
-    { 
-        
+    {
+
         enemyContoller = FindAnyObjectByType<FiedMonsterController>();
         if (enemyContoller == null)
         {
 
             bossController = FindAnyObjectByType<BossMoveController>();
-            if(bossController == null)
+            if (bossController == null)
             {
-                
-                return null;    
+
+                return null;
                 //return FindAnyObjectByType<BossMoveController>().gameObject;
             }
             else
             {
-                return  bossController.gameObject;
+                return bossController.gameObject;
             }
         }
         else
         {
             return enemyContoller.gameObject;
         }
-            
-        
+
+
     }
 
-   
+
 
 }

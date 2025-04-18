@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.Burst.Intrinsics.X86.Avx;
@@ -8,7 +9,8 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerManager : MonoBehaviour
 {
     Vector3 randomVector;
-    private int playercharSpeed = 2;
+    private int playercharSpeed = 8;
+    private int playerAtk = 30;
     // 플레이어의 캐릭터가 좌우로 이동한다.
     public bool isPlayCharMove = false;
     private bool isEncounter = false;
@@ -22,15 +24,20 @@ public class PlayerManager : MonoBehaviour
     public bool isAttackSequenceOff = false;
     public bool isPlayerBossBattleMode = false;
 
+    
     public Vector3 tempVector = Vector3.zero;
     public Vector3 destinationVector;
     public Vector2 moveTarget;
     Vector3 initialPlayerLocalScale;
 
+   
+    
     public GameObject skillObject;
     private GameObject SearchObject;
+    private GameObject targetObject;
 
     public float moveableDistance = 1.0f;
+
     private RandomPointGenerator randomPointGenerator;
     private FieldStandardBattleController fieldSBattleController;
     private FiedMonsterController fiedMonsterController;
@@ -43,6 +50,9 @@ public class PlayerManager : MonoBehaviour
     GameUIController gameUIController;
     BossBattleSquenceController bossBattleSquenceController;
     GameFlowController gameFlowController;
+    MonsterSpawnController monsterSpawnController;
+
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -54,12 +64,10 @@ public class PlayerManager : MonoBehaviour
         bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
         gameFlowController = FindAnyObjectByType<GameFlowController>();
         gameUIController = FindAnyObjectByType<GameUIController>();
+        monsterSpawnController = FindAnyObjectByType<MonsterSpawnController>();
         playerAnimator = GetComponent<Animator>();
-        moveableDistance = 1.5f;
+        moveableDistance = 1.0f;
         initialPlayerLocalScale = transform.localScale;
-
-        //fieldSBattleController = FindAnyObjectByType<FieldStandardBattleController>();
-        //playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
 
 
@@ -73,6 +81,27 @@ public class PlayerManager : MonoBehaviour
 
 
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Enemy"))
+        {
+            if(targetObject!= null)
+            {
+                return;
+            }
+            targetObject = collision.gameObject;
+            SearchObject = collision.gameObject;
+
+
+        
+        }
+        
+    }
+
+    public int  GetPlayerAtk()
+    {
+        return playerAtk;
+    }
 
     public async void MoveAttackSequence()
     {
@@ -82,22 +111,41 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         
-        if (enemySearchController.isEnemyNull(SearchObject))
+        if(!isPlayerBossBattleMode)
         {
-
-            Debug.Log("서치 시퀀스 체크");
-
-            SearchObject = enemySearchController.FoundEnemy();
-
-
-            if (SearchObject == null)
+            if(SearchObject==null)
             {
-                return;
-            }
+                SearchObject = monsterSpawnController.spawnedMonsterQueue.Dequeue();
 
+                if(SearchObject==null)
+                {
+                    return;
+                }
+                
+
+            }
+        }
+        else
+        {
+            if (enemySearchController.isEnemyNull(SearchObject))
+            {
+
+                Debug.Log("서치 시퀀스 체크");
+
+                SearchObject = enemySearchController.FoundEnemy();
+
+
+                if (SearchObject == null)
+                {
+                    return;
+                }
+
+            }
         }
 
-        playercharSpeed = 3;
+
+
+        playercharSpeed = 5;
 
         if (SearchObject.gameObject.tag.Equals("Boss"))// 보스가 나타났을때
         {
@@ -108,8 +156,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                moveableDistance = 2.0f;
-                await gameUIController.BattleBossUISetOn();
+                moveableDistance =1.5f;
             }
 
         }
@@ -135,10 +182,10 @@ public class PlayerManager : MonoBehaviour
 
         else
         {
-            //if (isPlayerBossBattleMode)
-            //{
-            //    await gameUIController.BattleBossUISetOn();
-            //}
+            if (isPlayerBossBattleMode)
+            {
+                await gameUIController.BattleBossUISetOn();
+            }
 
             Debug.Log("플레이어기준 배틀거리 :" + moveableDistance);
             playercharSpeed = 0;
@@ -244,7 +291,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         isAttaking = true;
-        Debug.Log("반복체크 중");
         playerAnimator.SetTrigger("Attack1");
         await UniTask.Delay(300);
         skillObject.SetActive(true);
@@ -259,6 +305,8 @@ public class PlayerManager : MonoBehaviour
         //isPlayerSequenceOff = true;
         //fieldGameOperator.OperateProcess();
     }
+
+    
 
     async UniTask AttackSet()
     {

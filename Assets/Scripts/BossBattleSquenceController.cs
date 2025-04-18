@@ -10,10 +10,14 @@ public class BossBattleSquenceController : MonoBehaviour
     PlayerManager playerManager;
     GameUIController gameUIController;
     GameFlowController gameFlowController;
+    StageController stageController;
+    TimerController timerController;
+
     bool isPlayerArrived;
     bool isBossWatch;
     private bool isGameEndSequnceOn;
-    public bool isPlayerWin;
+    public bool isPlayerWin = false;
+    public bool isTimeOverLose = false;// 시간 초과 패 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -23,19 +27,19 @@ public class BossBattleSquenceController : MonoBehaviour
         cameraController = FindAnyObjectByType<CameraController>();
         playerManager = FindAnyObjectByType<PlayerManager>();
         gameUIController = FindAnyObjectByType<GameUIController>();
+        stageController = FindAnyObjectByType<StageController>();
+        timerController = FindAnyObjectByType<TimerController>();
+
     }
     private async void Update()
     {
-        if (isBattleStartCondition())
-        {
-            await gameUIController.BattleBossUISetOn();
-        }
 
-        if(isPlayerWin&&gameFlowController.gameState ==GameFlowState.Field)
+
+        if ((isTimeOverLose || isPlayerWin) && gameFlowController.gameState == GameFlowState.Field)
         {
             await GameEndSequence();
         }
-        
+
     }
     public void PlayerArrivalCheck(bool setArrival)
     {
@@ -48,7 +52,7 @@ public class BossBattleSquenceController : MonoBehaviour
 
     }
 
-    
+
 
 
 
@@ -110,20 +114,47 @@ public class BossBattleSquenceController : MonoBehaviour
         }
         isGameEndSequnceOn = true;
 
-
-
         await UniTask.Delay(2000);
         bossGenerateController.isBossTime = false;
+
+        if (isPlayerWin)
+        {
+            string rsltTxt = "미션 클리어";
+            stageController.ResultStageUIOn(rsltTxt);
+            await UniTask.Delay(1000);
+            stageController.ResultStageUIOff();
+
+            stageController.goToNextSubStage();
+
+            bossGenerateController.UpdgradeBossDefenceStatus();
+
+        }
+
+        if (isTimeOverLose)
+        {
+            Debug.Log("실패 종료시퀀스  확인 ");
+            string rsltTxt = "미션실패...";
+            stageController.ResultStageUIOn(rsltTxt);
+            await UniTask.Delay(1000);
+            stageController.ResultStageUIOff();
+        }
+
         gameFlowController.gameState = GameFlowState.Ready;
-        isPlayerWin =false;
+
+        isPlayerWin = false;
+        isTimeOverLose = false;
         bossGenerateController.isBossTime = false;
         bossGenerateController.isBossSpawn = false;
-        playerManager.isPlayerBossBattleMode =false;
+        playerManager.isPlayerBossBattleMode = false;
+       
+        gameUIController.BackUpBossHpData();
+        gameUIController.BackupTimeData();
+        timerController.BackUpTimeCount();
 
         await UniTask.Delay(1000);
         isGameEndSequnceOn = false;
 
-       
+
 
     }
 }

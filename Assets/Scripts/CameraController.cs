@@ -47,13 +47,14 @@ public class CameraController : MonoBehaviour
             return;
         }
         isBossCameraSequenceStart = true;
+
         bossPostion = bossBattleSquenceController.GetBossPosition();
-        //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(bossPostion.x, bossPostion.y, -10), ref CameraSdVel, CameraSpeed * Time.deltaTime);
-        transform.DOMove(new Vector3(bossPostion.x,bossPostion.y,-10),0.7f);
+
+        transform.DOMove(new Vector3(bossPostion.x, bossPostion.y, -10), 0.7f);
         await UniTask.Delay(1000);
-        //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(Player.transform.position.x, Player.transform.position.y, -10), ref CameraSdVel, CameraSpeed * Time.deltaTime);
         transform.DOMove(new Vector3(Player.transform.position.x, Player.transform.position.y, -10), 0.7f);
         await UniTask.Delay(1000);
+
         bossBattleSquenceController.SequeneceCameraToPlayer();
         isBossCameraSequenceStart = false;
 

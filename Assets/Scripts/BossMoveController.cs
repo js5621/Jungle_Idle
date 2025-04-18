@@ -5,26 +5,31 @@ using UnityEngine.UIElements;
 public class BossMoveController : MonoBehaviour
 {
     Animator bossAnimator;
+
     public GameObject player;
-    public bool isBossAppeared =false;
+    public GameObject bossAtkObject;
 
     private float attackDistance;
-    public int Hp =1000;
+    public int Hp = 1000;
+
     PlayerManager playerManager;
     BossBattleSquenceController bossBattleSquenceController;
     GameUIController gameUIController;
-    private bool isAttacking= false;
-    bool isBossDying =false;
-    public GameObject bossAtkObject;
-    
+
+    private bool isAttacking = false;
+    bool isBossDying = false;
+    public bool isBossAppeared = false;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isBossAppeared=true;
+        isBossAppeared = true;
         bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
         bossBattleSquenceController.SequnceBossToCamera();
         gameUIController = FindAnyObjectByType<GameUIController>();
-        playerManager =FindAnyObjectByType<PlayerManager>();
+        playerManager = FindAnyObjectByType<PlayerManager>();
         bossAnimator = GetComponent<Animator>();
 
 
@@ -36,24 +41,28 @@ public class BossMoveController : MonoBehaviour
     {
         if (Vector2.Distance(playerManager.gameObject.transform.position, transform.position) < attackDistance)
         {
-            if(!gameUIController.isBossHpOver())
+            if (!gameUIController.IsBossHpOver())
             {
+                if (gameUIController.IsTimeOver())
+                {
+                    await BossDieSequence();
+                }
                 await BossAttack();
             }
             else
             {
                 await BossDieSequence();
             }
-            
+
         }
 
     }
 
     async UniTask BossAttack()
     {
-        
+
         bossBattleSquenceController.BossWatchPlayerCheck(true);
-        if(!bossBattleSquenceController.isBattleStartCondition()||this.gameObject ==null)
+        if (!bossBattleSquenceController.isBattleStartCondition() || this.gameObject == null)
         {
             return;
         }
@@ -63,7 +72,7 @@ public class BossMoveController : MonoBehaviour
         {
             return;
         }
-            isAttacking = true;
+        isAttacking = true;
         Debug.Log("반복체크 중");
         bossAnimator.SetTrigger("Attack");
         await UniTask.Delay(300);
@@ -82,17 +91,17 @@ public class BossMoveController : MonoBehaviour
         if (collision.gameObject.name.Equals("PlayerAttack"))
         {
             Debug.Log("충돌 감지 확인");
-           
+
         }
     }
 
     async UniTask BossDieSequence()
     {
-        if(this.gameObject ==null)
-        { 
+        if (this.gameObject == null)
+        {
             return;
         }
-        if(isBossDying)
+        if (isBossDying)
         {
             return;
         }
@@ -101,13 +110,13 @@ public class BossMoveController : MonoBehaviour
         gameUIController.BattleBossUISetOff();
         await UniTask.Delay(1000);
         this.gameObject.SetActive(false);
-        if (gameUIController.isTimeOver())
+        if (gameUIController.IsTimeOver())
         {
-            bossBattleSquenceController.isPlayerWin = false;
+            bossBattleSquenceController.isTimeOverLose = true;
         }
-        else if (gameUIController.isBossHpOver())
+        else if (gameUIController.IsBossHpOver())
         {
-            bossBattleSquenceController.isPlayerWin =true;
+            bossBattleSquenceController.isPlayerWin = true;
         }
         bossBattleSquenceController.BossWatchPlayerCheck(false);
         Destroy(this.gameObject, 2f);

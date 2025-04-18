@@ -1,0 +1,62 @@
+{
+    "name": "AndCon",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "1640753e-b745-447d-ae10-eb75db4c191f",
+            "actions": [
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "59dc5e12-6f15-4055-86d9-157c681409d4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c1e5891a-4049-41d7-8d6a-6237748fb4c9",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Click",
+            "id": "81689c11-268e-4c93-b9b8-8ac617f90d62",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "b038eff6-256c-4796-9244-2eda14e79f41",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8bbc600c-57cb-4a68-a9d2-d9ffd9d65cda",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

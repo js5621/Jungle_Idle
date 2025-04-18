@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSpawnController : MonoBehaviour
@@ -9,11 +11,13 @@ public class MonsterSpawnController : MonoBehaviour
     private BossGenerateController bossController;
     public GameObject spawnGoblinPrefab;
     public GameObject spawnSkeletonPrefab;
-
+    
     public bool isMonsterSpawnerOn = false;
     public bool isMonsterSpawnerOff=false;
     public bool isSpawning =false;
     Vector3 randomVector;
+    public Queue <GameObject> spawnedMonsterQueue;
+
     public GameObject[] monsterSpawnObject;
     GameFlowController gameFlowController;
     void Start()
@@ -23,6 +27,7 @@ public class MonsterSpawnController : MonoBehaviour
         playerManager = FindAnyObjectByType<PlayerManager>();
         bossController = FindAnyObjectByType<BossGenerateController>();
         gameFlowController = FindAnyObjectByType<GameFlowController>();
+        spawnedMonsterQueue = new Queue<GameObject>();
     }
 
     // Update is called once per frame
@@ -47,10 +52,11 @@ public class MonsterSpawnController : MonoBehaviour
             return;
         }
 
-        Vector2 monsterSpawnPoint = Vector2.zero + Random.insideUnitCircle*10;
+        Vector2 monsterSpawnPoint = Vector2.zero + Random.insideUnitCircle*20;
         isSpawning =true;
-        Instantiate(monsterSpawnObject[Random.Range(0,2)], monsterSpawnPoint,Quaternion.identity);
-        await UniTask.Delay(2500);
+        ;
+        spawnedMonsterQueue.Enqueue(Instantiate(monsterSpawnObject[Random.Range(0, 2)], monsterSpawnPoint, Quaternion.identity));
+        await UniTask.Delay(500);
 
         isSpawning=false;
         

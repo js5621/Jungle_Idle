@@ -8,14 +8,14 @@ public class FiedMonsterController : MonoBehaviour
     bool isDamgeSquenceOn;
     bool isDamgeSquenceOff;
     Animator monsterAnimator;
-    int monsterHp = 2;
+    int monsterHp = 1;
     private float speed = 0.5f;
     private Vector2 moveTarget;
     private Vector2 position;
     private bool isWalk;
     private bool isAttacking = false;
     public bool isMonSterDie = false;
-    private float moveableDistance = 0.5f;
+    private float moveableDistance = 0.3f;
     FieldStandardBattleController fieldStandardBattleController;
     PlayerManager playerManager;
     Vector3 initialLocalScale;
@@ -61,19 +61,24 @@ public class FiedMonsterController : MonoBehaviour
 
             if (monsterHp > 0)
             {
-                KnockBack();
+                //KnockBack();
 
+                
                 Debug.Log("ÇÇ°Ý ÆÇÁ¤");
                 monsterAnimator.SetTrigger("Damage");
                 monsterHp -= 1;
+                if(monsterHp <= 0)
+                {
+                    Debug.Log("»ç¸Á");
+                    monsterAnimator.SetTrigger("Die");
+                    isMonSterDie = true;
+                    Destroy(this.gameObject, 1f);
+                }
             }
 
             else
             {
-                Debug.Log("»ç¸Á");
-                monsterAnimator.SetTrigger("Die");
-                isMonSterDie = false;
-                Destroy(this.gameObject, 1f);
+               
 
             }
         }
