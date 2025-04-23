@@ -8,21 +8,23 @@ public class ButtonEquipController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] GameObject parentBtnGoup;
+
     int childState = 0;
 
+    PlayerManager playerManager;
+    ScriptableItemObjectControl scriptableItemObjectControl;
     public void Start()
     {
         SetChildState();
+        playerManager = FindAnyObjectByType<PlayerManager>();
+        scriptableItemObjectControl = FindAnyObjectByType<ScriptableItemObjectControl>();
     }
 
     public void ProcessEquipByButton()
     {
         if (transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Contains("장착"))
         {
-            Debug.Log(" 장착시도중 ");
-            transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "해제";
-            transform.GetComponent<UnityEngine.UI.Image>().color = Color.red;
-
+            
             for (int i = 0; i < parentBtnGoup.transform.childCount; i++)
             {
 
@@ -35,18 +37,32 @@ public class ButtonEquipController : MonoBehaviour
                 {
                     if (parentBtnGoup.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text.Contains("해제"))
                     {
+                        playerManager.RollBackAtk(scriptableItemObjectControl.getArm_atk_bonus_val(i));
+                        playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(i));
                         parentBtnGoup.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "장착";
+
+                        
                     }
 
                     parentBtnGoup.transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().color = Color.green;
                 }
             }
+
+            Debug.Log(" 장착시도중 ");
+            transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "해제";
+            transform.GetComponent<UnityEngine.UI.Image>().color = Color.red;
+            playerManager.SetplayerAtk(scriptableItemObjectControl.getArm_atk_bonus_val(childState));
+            playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
+
+
         }
 
         else if (transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Contains("해제"))
         {
             transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "장착";
             transform.GetComponent<UnityEngine.UI.Image>().color = Color.green;
+            playerManager.RollBackAtk(scriptableItemObjectControl.getArm_atk_bonus_val(childState));
+            playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
 
 
         }

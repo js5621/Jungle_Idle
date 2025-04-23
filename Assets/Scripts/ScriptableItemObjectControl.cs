@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ScriptableItemObjectControl : MonoBehaviour
@@ -13,6 +14,16 @@ public class ScriptableItemObjectControl : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public int getArm_atk_bonus_val(int index)
+    {
+        return armDataListSO.armItems[index].arm_atk_bonus_val;
+    }
+
+    public int getArm_atk_atkSpeed_bonus_val(int index)
+    {
+        return armDataListSO.armItems[index].arm_atkSpeed_bonus_val;
     }
 
     public string getItemStatInfoString(int index)

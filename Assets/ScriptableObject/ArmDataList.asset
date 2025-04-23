@@ -12,4 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2cc7a55bcc14543ab7222ebd66eb54, type: 3}
   m_Name: ArmDataList
   m_EditorClassIdentifier: 
-  armItems: []
+  armItems:
+  - arm_name: "\uB77C\uADF8\uB098 \uBE14\uB808\uC774\uB4DC "
+    arm_type: "\uAC80"
+    arm_atk_bonus_val: 30
+    arm_atkSpeed_bonus_val: 0
+    owner_id: js5621
+  - arm_name: "\uD30C\uBA78\uC758 \uB3C4\uB07C"
+    arm_type: "\uB3C4\uB07C"
+    arm_atk_bonus_val: 120
+    arm_atkSpeed_bonus_val: -100
+    owner_id: js5621
+  - arm_name: "\uADF8\uB9BC\uC790 \uC228\uACB0"
+    arm_type: "\uB300\uAC70"
+    arm_atk_bonus_val: -5
+    arm_atkSpeed_bonus_val: 500
+    owner_id: js5621

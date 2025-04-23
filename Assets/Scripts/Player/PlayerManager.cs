@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     Vector3 randomVector;
     private int playercharSpeed = 8;
     private int playerAtk = 30;
+    int atkSpeedBonus = 0;
     // 플레이어의 캐릭터가 좌우로 이동한다.
     public bool isPlayCharMove = false;
     private bool isEncounter = false;
@@ -37,10 +38,10 @@ public class PlayerManager : MonoBehaviour
     private GameObject targetObject;
 
     public float moveableDistance = 1.0f;
-
     private RandomPointGenerator randomPointGenerator;
     private FieldStandardBattleController fieldSBattleController;
     private FiedMonsterController fiedMonsterController;
+    
 
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
@@ -68,8 +69,7 @@ public class PlayerManager : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         moveableDistance = 1.0f;
         initialPlayerLocalScale = transform.localScale;
-
-
+      
 
 
     }
@@ -97,6 +97,29 @@ public class PlayerManager : MonoBehaviour
         }
         
     }
+    public void SetPlayerAtkSpeed(int minusSpeedValue)
+    {
+        atkSpeedBonus = minusSpeedValue;
+    }
+    
+    public void RollBackAtkSpeed(int minusSpeedValue)
+    {
+        atkSpeedBonus = -minusSpeedValue;
+    }
+
+
+    public void SetplayerAtk(int addAtkaValue)
+    {
+        playerAtk += addAtkaValue;
+    }
+
+    public void RollBackAtk(int addAtkaValue)
+    {
+        playerAtk -= addAtkaValue;
+    }
+
+
+
 
     public int  GetPlayerAtk()
     {
@@ -294,9 +317,10 @@ public class PlayerManager : MonoBehaviour
         playerAnimator.SetTrigger("Attack1");
         await UniTask.Delay(300);
         skillObject.SetActive(true);
-        await UniTask.Delay(800);
+        await UniTask.Delay(800 - atkSpeedBonus);
+        //playerAnimator.speed += atkSpeedBonus/400;
         skillObject.SetActive(false);
-        await UniTask.Delay(800);
+        await UniTask.Delay(800 - atkSpeedBonus);
         isAttaking = false;
 
 

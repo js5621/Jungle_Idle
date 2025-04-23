@@ -69,7 +69,7 @@ public class BossGenerateController : MonoBehaviour
 
     public void UpdgradeBossDefenceStatus()
     {
-        bossDefenceStatus = bossDefenceStatus + 20;
+        bossDefenceStatus = bossDefenceStatus + 10;
     }
 
     public int GetBossDefenceStatusValue()
