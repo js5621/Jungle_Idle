@@ -1,10 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yourcompany.yourapp">
 
-    <application
+	<application
         android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher">
+        <!-- 앱의 컴포넌트 (Activity 등) 들어올 수 있음 -->
     </application>
+    <!-- ✅ 퍼미션은 application 바깥에 선언해야 함 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+   
 
 </manifest>

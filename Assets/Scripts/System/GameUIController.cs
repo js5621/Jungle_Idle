@@ -28,7 +28,7 @@ public class GameUIController : MonoBehaviour
 
 
         playerManager = FindAnyObjectByType<PlayerManager>();
-        bossGenerateController = FindAnyObjectByType<BossGenerateController>(); 
+        bossGenerateController = FindAnyObjectByType<BossGenerateController>();
 
         // 보스  HP DAta 표시 UI 데이터 초기 정보 포지션 백업
         bossHpAnchoredPositionBkData = bossHpRect.anchoredPosition;
@@ -40,12 +40,12 @@ public class GameUIController : MonoBehaviour
 
     }
 
-    public void BossHPUIDamgage()
+    public void BossHPUIDamgage(int playerAtk)
     {
-       
+
         float sizeDeltaReduce = 55;
 
-        float sizeDeltaReduceVal = sizeDeltaReduce + (playerManager.GetPlayerAtk() - bossGenerateController.GetBossDefenceStatusValue());
+        float sizeDeltaReduceVal = sizeDeltaReduce + (playerAtk - bossGenerateController.GetBossDefenceStatusValue());
         float anchorReduceVal = sizeDeltaReduceVal / 2;
         if (anchorReduceVal <= 0)
         {
@@ -56,7 +56,7 @@ public class GameUIController : MonoBehaviour
         {
             sizeDeltaReduceVal = 0;
         }
-     
+
 
         bossHpRect.anchoredPosition = new Vector2(bossHpRect.anchoredPosition.x - anchorReduceVal, bossHpRect.anchoredPosition.y);
         bossHpRect.sizeDelta = new Vector2(bossHpRect.sizeDelta.x - sizeDeltaReduceVal, bossHpRect.sizeDelta.y);
@@ -67,7 +67,7 @@ public class GameUIController : MonoBehaviour
         gameTimerRect.anchoredPosition = new Vector2(gameTimerRect.anchoredPosition.x - 14f, gameTimerRect.anchoredPosition.y);
         gameTimerRect.sizeDelta = new Vector2(gameTimerRect.sizeDelta.x - 28f, gameTimerRect.sizeDelta.y);
     }
- 
+
     public void BackupTimeData()
     {
         gameTimerRect.anchoredPosition = timeAnchoredPositionBkData;
@@ -110,9 +110,9 @@ public class GameUIController : MonoBehaviour
     }
     public async UniTask BattleBossUISetOn()
     {
-        if(BossBattlePanel.activeSelf||IsBossHpOver()||IsTimeOver())
+        if (BossBattlePanel.activeSelf || IsBossHpOver() || IsTimeOver())
         {
-            return; 
+            return;
         }
         await UniTask.Delay(500);
         BossBattlePanel.SetActive(true);

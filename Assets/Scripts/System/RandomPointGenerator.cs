@@ -13,10 +13,5 @@ public class RandomPointGenerator : MonoBehaviour
             RandomVectorArray[i] = Random.insideUnitCircle * 10;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
+

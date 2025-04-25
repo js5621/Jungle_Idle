@@ -24,7 +24,7 @@ public class ButtonEquipController : MonoBehaviour
     {
         if (transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Contains("¿Â¬¯"))
         {
-            
+
             for (int i = 0; i < parentBtnGoup.transform.childCount; i++)
             {
 
@@ -40,8 +40,6 @@ public class ButtonEquipController : MonoBehaviour
                         playerManager.RollBackAtk(scriptableItemObjectControl.getArm_atk_bonus_val(i));
                         playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(i));
                         parentBtnGoup.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "¿Â¬¯";
-
-                        
                     }
 
                     parentBtnGoup.transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().color = Color.green;
@@ -54,7 +52,6 @@ public class ButtonEquipController : MonoBehaviour
             playerManager.SetplayerAtk(scriptableItemObjectControl.getArm_atk_bonus_val(childState));
             playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
 
-
         }
 
         else if (transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Contains("«ÿ¡¶"))
@@ -63,8 +60,6 @@ public class ButtonEquipController : MonoBehaviour
             transform.GetComponent<UnityEngine.UI.Image>().color = Color.green;
             playerManager.RollBackAtk(scriptableItemObjectControl.getArm_atk_bonus_val(childState));
             playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
-
-
         }
     }
 
@@ -79,7 +74,7 @@ public class ButtonEquipController : MonoBehaviour
             }
         }
     }
-        // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
 

@@ -25,14 +25,14 @@ public class PlayerManager : MonoBehaviour
     public bool isAttackSequenceOff = false;
     public bool isPlayerBossBattleMode = false;
 
-    
+
     public Vector3 tempVector = Vector3.zero;
     public Vector3 destinationVector;
     public Vector2 moveTarget;
     Vector3 initialPlayerLocalScale;
 
-   
-    
+
+
     public GameObject skillObject;
     private GameObject SearchObject;
     private GameObject targetObject;
@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     private RandomPointGenerator randomPointGenerator;
     private FieldStandardBattleController fieldSBattleController;
     private FiedMonsterController fiedMonsterController;
-    
+
 
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
     GameFlowController gameFlowController;
     MonsterSpawnController monsterSpawnController;
 
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,26 +66,22 @@ public class PlayerManager : MonoBehaviour
         gameFlowController = FindAnyObjectByType<GameFlowController>();
         gameUIController = FindAnyObjectByType<GameUIController>();
         monsterSpawnController = FindAnyObjectByType<MonsterSpawnController>();
+
         playerAnimator = GetComponent<Animator>();
         moveableDistance = 1.0f;
         initialPlayerLocalScale = transform.localScale;
-      
-
-
     }
 
     // Update is called once per frame
     async void Update()
     {
         MoveAttackSequence();
-
-
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag.Equals("Enemy"))
+        if (collision.gameObject.tag.Equals("Enemy"))
         {
-            if(targetObject!= null)
+            if (targetObject != null)
             {
                 return;
             }
@@ -93,18 +89,27 @@ public class PlayerManager : MonoBehaviour
             SearchObject = collision.gameObject;
 
 
-        
+
         }
-        
+
     }
     public void SetPlayerAtkSpeed(int minusSpeedValue)
     {
         atkSpeedBonus = minusSpeedValue;
     }
-    
+
     public void RollBackAtkSpeed(int minusSpeedValue)
     {
-        atkSpeedBonus = -minusSpeedValue;
+        if (atkSpeedBonus > 0)
+        {
+            atkSpeedBonus -= minusSpeedValue;
+        }
+
+        else if (atkSpeedBonus < 0)
+        {
+            atkSpeedBonus += minusSpeedValue;
+        }
+
     }
 
 
@@ -121,30 +126,30 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    public int  GetPlayerAtk()
+    public int GetPlayerAtk()
     {
         return playerAtk;
     }
 
     public async void MoveAttackSequence()
     {
-        
+
         if (gameFlowController.gameState != GameFlowState.Field)
         {
             return;
         }
-        
-        if(!isPlayerBossBattleMode)
+
+        if (!isPlayerBossBattleMode)
         {
-            if(SearchObject==null)
+            if (SearchObject == null)
             {
                 SearchObject = monsterSpawnController.spawnedMonsterQueue.Dequeue();
 
-                if(SearchObject==null)
+                if (SearchObject == null)
                 {
                     return;
                 }
-                
+
 
             }
         }
@@ -179,7 +184,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                moveableDistance =1.5f;
+                moveableDistance = 1.5f;
             }
 
         }
@@ -318,7 +323,6 @@ public class PlayerManager : MonoBehaviour
         await UniTask.Delay(300);
         skillObject.SetActive(true);
         await UniTask.Delay(800 - atkSpeedBonus);
-        //playerAnimator.speed += atkSpeedBonus/400;
         skillObject.SetActive(false);
         await UniTask.Delay(800 - atkSpeedBonus);
         isAttaking = false;
@@ -330,7 +334,7 @@ public class PlayerManager : MonoBehaviour
         //fieldGameOperator.OperateProcess();
     }
 
-    
+
 
     async UniTask AttackSet()
     {

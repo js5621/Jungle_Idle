@@ -43,9 +43,6 @@ public class EnemySearchController : MonoBehaviour
             return enemyContoller.gameObject;
         }
 
-
     }
-
-
 
 }

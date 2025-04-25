@@ -5,16 +5,6 @@ public class ScriptableItemObjectControl : MonoBehaviour
 {
     [SerializeField] ArmDataListSO armDataListSO;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public int getArm_atk_bonus_val(int index)
     {
@@ -39,22 +29,18 @@ public class ScriptableItemObjectControl : MonoBehaviour
         msgString += "\n";
         // 장비효과 설정
         msgString += "장비 효과 설정\n";
-        
+
         if (armDataListSO.armItems[index].arm_atk_bonus_val != 0)
         {
             msgString += "공격력 보정:" + armDataListSO.armItems[index].arm_atk_bonus_val + "\n";
         }
 
-        if (armDataListSO.armItems[index].arm_atkSpeed_bonus_val !=0)
+        if (armDataListSO.armItems[index].arm_atkSpeed_bonus_val != 0)
         {
             msgString += "공격속도 보정:" + armDataListSO.armItems[index].arm_atkSpeed_bonus_val + "\n";
         }
-       
-            
-      
 
         return msgString;
-
 
     }
 }

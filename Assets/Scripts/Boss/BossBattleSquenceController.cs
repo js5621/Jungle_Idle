@@ -47,9 +47,6 @@ public class BossBattleSquenceController : MonoBehaviour
         {
             isPlayerArrived = true;
         }
-
-
-
     }
 
 
@@ -146,15 +143,13 @@ public class BossBattleSquenceController : MonoBehaviour
         bossGenerateController.isBossTime = false;
         bossGenerateController.isBossSpawn = false;
         playerManager.isPlayerBossBattleMode = false;
-       
+
         gameUIController.BackUpBossHpData();
         gameUIController.BackupTimeData();
         timerController.BackUpTimeCount();
 
         await UniTask.Delay(1000);
         isGameEndSequnceOn = false;
-
-
 
     }
 }

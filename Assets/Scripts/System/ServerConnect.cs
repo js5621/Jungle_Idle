@@ -31,19 +31,12 @@ public class ServerConnect : MonoBehaviour
     int[] armAtkSpeedVal = { 0, -100, 400 };
 
 
-    string gameServerUrl = "http://localhost:4416"; // 서버 주소
+    //string gameServerUrl = "http://localhost:4416"; 테스트용서버 주소
+    string gameServerUrl = "https://192.168.0.39:4416"; //블루스택용 서버 주소
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    async void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+   
     public void QuickLogin()
     {
         uiRegisterPanel.SetActive(false);
@@ -51,6 +44,8 @@ public class ServerConnect : MonoBehaviour
     }
     public async void RegisterInfoSeq()
     {
+
+
         if (registerIdField.text == "" || registerEmailField.text == "" || registerpasswdField.text == "")
         {
             return;
@@ -66,10 +61,18 @@ public class ServerConnect : MonoBehaviour
         uiLoginPanel.SetActive(true);
 
     }
-
+    class BypassCertificateHandler : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            return true; // 항상 인증서 유효하다고 처리
+        }
+    }
 
     public async void SetCharacterInitialInfo()
     {
+
+
         if (loginIdField.text == "" || loginPwField.text == "")
         {
             return;
@@ -83,6 +86,9 @@ public class ServerConnect : MonoBehaviour
         string serverTaskUrl = $"{gameServerUrl}/user/{userId}";
 
         var request = UnityWebRequest.Get(serverTaskUrl);
+        request.certificateHandler = new BypassCertificateHandler();
+        request.timeout = 10;
+
         await request.SendWebRequest().ToUniTask();
 
         if (request.result != UnityWebRequest.Result.Success)
@@ -108,7 +114,12 @@ public class ServerConnect : MonoBehaviour
         string serverTaskUrl = $"{gameServerUrl}/item/{ownerId}";
 
         var request = UnityWebRequest.Get(serverTaskUrl);
+
+
+        request.certificateHandler = new BypassCertificateHandler();
+        request.timeout = 10;
         await request.SendWebRequest().ToUniTask();
+
 
         if (request.result != UnityWebRequest.Result.Success)
         {
@@ -116,7 +127,7 @@ public class ServerConnect : MonoBehaviour
         }
         else
         {
-            
+
             string wrappedJson = "{\"jArmItems\":" + request.downloadHandler.text + "}";
 
 
@@ -126,8 +137,8 @@ public class ServerConnect : MonoBehaviour
             {
                 foreach (var arm in result.jArmItems)
                 {
-                    JsonArmItem setArmItem =new JsonArmItem(arm.arm_name,arm.arm_type,arm.arm_atk_bonus_val,arm.arm_atkSpeed_bonus_val,arm.owner_id);
-                    
+                    JsonArmItem setArmItem = new JsonArmItem(arm.arm_name, arm.arm_type, arm.arm_atk_bonus_val, arm.arm_atkSpeed_bonus_val, arm.owner_id);
+
                     armDataListSO.armItems.Add(setArmItem);
                 }
             }
@@ -137,7 +148,8 @@ public class ServerConnect : MonoBehaviour
             }
 
             await UniTask.Delay(200);
-            SceneManager.LoadScene(1);
+
+            SceneManager.LoadScene(2);
 
         }
     }
@@ -147,6 +159,10 @@ public class ServerConnect : MonoBehaviour
         var userJson = JsonUtility.ToJson(new JsonUser(user_id, user_pw, user_email));
         Debug.Log(userJson);
         var request = new UnityWebRequest($"{gameServerUrl}/user", "POST");
+
+        request.certificateHandler = new BypassCertificateHandler();
+        request.timeout = 10;
+
         byte[] bodyRaw = Encoding.UTF8.GetBytes(userJson);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -161,10 +177,14 @@ public class ServerConnect : MonoBehaviour
     }
 
 
-    public async UniTask PresentUserItemAsync(string arm_name, string arm_type, int arm_atk_bonus_value, int arm_atkSpeed_bonus_value, string owner_id)
+    public async UniTask PresentUserItemAsync(string arm_name, string arm_type, int arm_atk_bonus_val, int arm_atkSpeed_bonus_val, string owner_id)
     {
-        var userJson = JsonUtility.ToJson(new JsonArmItem(arm_name, arm_type, arm_atk_bonus_value, arm_atkSpeed_bonus_value, owner_id));
+        var userJson = JsonUtility.ToJson(new JsonArmItem(arm_name, arm_type, arm_atk_bonus_val, arm_atkSpeed_bonus_val, owner_id));
         var request = new UnityWebRequest($"{gameServerUrl}/armItem", "POST");
+
+        request.certificateHandler = new BypassCertificateHandler();
+        request.timeout = 10;
+
         byte[] bodyRaw = Encoding.UTF8.GetBytes(userJson);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -193,7 +213,6 @@ public class ServerConnect : MonoBehaviour
             this.user_id = user_id;
             this.user_pw = user_pw;
             this.user_email = user_email;
-
         }
 
     }
@@ -214,7 +233,6 @@ public class ServerConnect : MonoBehaviour
             this.arm_atkSpeed_bonus_val = arm_atkSpeed_bonus_val;
             this.owner_id = owner_id;
         }
-
     }
 
     [System.Serializable]

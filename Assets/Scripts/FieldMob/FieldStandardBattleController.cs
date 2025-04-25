@@ -3,12 +3,11 @@ using UnityEngine;
 public class FieldStandardBattleController : MonoBehaviour
 {
     GameObject tempConnectedMonster;
-    
+
 
     public void MonsterConnect(GameObject tempMonSter)
     {
-        tempConnectedMonster =tempMonSter;
-   
+        tempConnectedMonster = tempMonSter;
     }
 
     public void MonsterDisconnect()
@@ -16,6 +15,4 @@ public class FieldStandardBattleController : MonoBehaviour
         tempConnectedMonster = null;
     }
 
-
-    
 }

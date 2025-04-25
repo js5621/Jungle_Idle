@@ -33,32 +33,32 @@ public class TimerController : MonoBehaviour
     async UniTask TimerSequence()
     {
 
-        
+
         if (timerCount <= 0 || isTimerOn)
         {
             return;
         }
 
-       
+
         isTimerOn = true;
 
         int timerIntervalSec = 1000;
-        
+
         while (timerCount > 0)
         {
-            if(gameUIController.IsBossHpOver())
+            if (gameUIController.IsBossHpOver())
             {
                 break;
             }
             await UniTask.Delay(timerIntervalSec);
             gameUIController.TimeReduction();
             timerCount--;
-            
+
         }
 
         await UniTask.Delay(500);
         isTimerOn = false;
     }
 
-    
+
 }

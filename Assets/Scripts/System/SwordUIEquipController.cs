@@ -15,7 +15,4 @@ public class SwordUIEquipController : MonoBehaviour
         swordUIPanel.SetActive(false);
     }
 
-   
-
-
 }

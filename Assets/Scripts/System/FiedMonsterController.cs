@@ -42,12 +42,12 @@ public class FiedMonsterController : MonoBehaviour
 
         if (bossController.isBossTime)
         {
-            if(this.gameObject != null)
+            if (this.gameObject != null)
             {
                 this.gameObject.SetActive(false);
                 Destroy(this.gameObject);
             }
-            
+
         }
     }
 
@@ -63,11 +63,11 @@ public class FiedMonsterController : MonoBehaviour
             {
                 //KnockBack();
 
-                
+
                 Debug.Log("피격 판정");
                 monsterAnimator.SetTrigger("Damage");
                 monsterHp -= 1;
-                if(monsterHp <= 0)
+                if (monsterHp <= 0)
                 {
                     Debug.Log("사망");
                     monsterAnimator.SetTrigger("Die");
@@ -78,13 +78,11 @@ public class FiedMonsterController : MonoBehaviour
 
             else
             {
-               
+
 
             }
         }
     }
-
-
     public async void MoveAttackSequence()
     {
         if (Vector2.Distance(playerManager.transform.position, transform.position) > moveableDistance)
@@ -147,7 +145,6 @@ public class FiedMonsterController : MonoBehaviour
     }
     void ChangeLocalScale()
     {
-
         if (transform.position.x - playerManager.transform.position.x < 0)
         {
             transform.localScale = new Vector3(-1, transform.localScale.y / Mathf.Abs(transform.localScale.y), 1);
@@ -158,9 +155,6 @@ public class FiedMonsterController : MonoBehaviour
             transform.localScale = new Vector3(1, transform.localScale.y / Mathf.Abs(transform.localScale.y), 1);
             transform.localScale = transform.localScale * initialLocalScale.x;
         }
-
-
-
     }
 }
 

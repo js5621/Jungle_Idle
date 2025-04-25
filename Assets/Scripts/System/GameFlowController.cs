@@ -8,15 +8,14 @@ public enum GameFlowState
 }
 public class GameFlowController : MonoBehaviour
 {
-
     public GameFlowState gameState;
 
     private void Start()
     {
-        gameState = GameFlowState.Ready;    
+        gameState = GameFlowState.Ready;
     }
 
-    public void SetGameState( GameFlowState requestGameState)
+    public void SetGameState(GameFlowState requestGameState)
     {
         gameState = requestGameState;
     }
