@@ -37,7 +37,7 @@ public class PlayerAttackController : MonoBehaviour
             tmpTmProPrefab = Instantiate(attackDamageTmPro, damageTextPosition, Quaternion.identity);
 
             int playerAtk = transform.parent.GetComponent<PlayerManager>().GetPlayerAtk();
-            //      tmpTmProPrefab.GetComponent<TextMeshPro>().text = MakeUkCheonValue(playerAtk);
+            tmpTmProPrefab.GetComponent<TextMeshPro>().text = MakeUkCheonValue(playerAtk);
 
             Destroy(tmpParticleObject, 1f);
             Destroy(tmpTmProPrefab, 1f);
@@ -58,7 +58,7 @@ public class PlayerAttackController : MonoBehaviour
             int playerAtk = transform.parent.GetComponent<PlayerManager>().GetPlayerAtk();
             tmpTmProPrefab.GetComponent<TextMeshPro>().autoSizeTextContainer = true;
             tmpTmProPrefab.GetComponent<TextMeshPro>().fontSize = 5f;
-            //      tmpTmProPrefab.GetComponent<TextMeshPro>().text = MakeUkCheonValue(playerAtk);
+            tmpTmProPrefab.GetComponent<TextMeshPro>().text = MakeUkCheonValue(playerAtk);
 
 
             gameUIController.BossHPUIDamgage(playerAtk);

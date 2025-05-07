@@ -16,6 +16,7 @@ public class ButtonEquipController : MonoBehaviour
     public void Start()
     {
         SetChildState();
+        Debug.Log("cdstate" + childState);
         playerManager = FindAnyObjectByType<PlayerManager>();
         scriptableItemObjectControl = FindAnyObjectByType<ScriptableItemObjectControl>();
     }
@@ -49,8 +50,10 @@ public class ButtonEquipController : MonoBehaviour
             Debug.Log(" 장착시도중 ");
             transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "해제";
             transform.GetComponent<UnityEngine.UI.Image>().color = Color.red;
+            Debug.Log("보정값 확인" + childState + "번째버튼 보정값" + scriptableItemObjectControl.getArm_atk_bonus_val(childState).ToString());
             playerManager.SetplayerAtk(scriptableItemObjectControl.getArm_atk_bonus_val(childState));
-            playerManager.RollBackAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
+
+            playerManager.SetPlayerAtkSpeed(scriptableItemObjectControl.getArm_atk_atkSpeed_bonus_val(childState));
 
         }
 
@@ -67,12 +70,13 @@ public class ButtonEquipController : MonoBehaviour
     {
         for (int i = 0; i < parentBtnGoup.transform.childCount; i++)
         {
-            if (parentBtnGoup.transform.GetChild(i).gameObject == transform)
+            if (parentBtnGoup.transform.GetChild(i) == transform)
             {
                 childState = i;
                 break;
             }
         }
+
     }
     // Update is called once per frame
     void Update()
