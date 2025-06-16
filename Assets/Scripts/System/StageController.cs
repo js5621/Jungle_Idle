@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
-
     [SerializeField] GameObject stageUIPanel;
     [SerializeField] TextMeshProUGUI stageUIText;
 
@@ -13,16 +12,12 @@ public class StageController : MonoBehaviour
 
     int subStageValue = 1;
     int mainStageValue = 1;
-
-    int tmpDebugIdx = 0;// 버그 테스트용
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    int tmpDebugIdx = 0;
     void Start()
     {
         gameFlowController = FindAnyObjectByType<GameFlowController>();
 
     }
-
-    // Update is called once per frame
     async void Update()
     {
         if (gameFlowController.gameState == GameFlowState.Ready)
@@ -30,7 +25,6 @@ public class StageController : MonoBehaviour
             await StartStagePanelOnOff();
         }
     }
-
     async UniTask StartStagePanelOnOff()
     {
         
@@ -38,14 +32,13 @@ public class StageController : MonoBehaviour
         {
             return;
         }
+        
         isStagePanelOn = true;
-
-    
+        
         if (stageUIText.text.Equals("미션 클리어"))
         {
             stageUIText.text = $"스테이지 {mainStageValue}.{subStageValue}\n 미션 시작!";
         }
-
         if (stageUIText.text.Equals("미션실패..."))
         {
             Debug.Log("실패 메세지 확인 ");
@@ -55,29 +48,24 @@ public class StageController : MonoBehaviour
 
         await UniTask.Delay(2000);
         stageUIPanel.SetActive(true);
+        
         await UniTask.Delay(2000);
         stageUIPanel.SetActive(false);
 
         gameFlowController.gameState = GameFlowState.Field;
         await UniTask.Delay(1000);
+        
         isStagePanelOn = false;
-
-
     }
-
     public void ResultStageUIOn(string resultText)
     {
         stageUIPanel.SetActive(true);
         stageUIText.text = resultText;
     }
-
     public void ResultStageUIOff()
     {
         stageUIPanel.SetActive(false);
     }
-
-
-
     public void goToNextSubStage()
     {
         if (subStageValue == 2)
@@ -89,24 +77,19 @@ public class StageController : MonoBehaviour
         else
         {
             subStageValue += 1;
-
         }
     }
-
     public void goToNextMaingStge()
     {
         mainStageValue += 1;
     }
-
     public int getSubstageValue()
     {
         return subStageValue;
 
     }
-
     public int getMainStageValue()
     {
         return mainStageValue;
     }
-
 }

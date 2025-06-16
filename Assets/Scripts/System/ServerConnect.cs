@@ -16,27 +16,18 @@ public class ServerConnect : MonoBehaviour
     [SerializeField] TMP_InputField registerIdField;
     [SerializeField] TMP_InputField registerpasswdField;
     [SerializeField] TMP_InputField registerEmailField;
-
     // 로그인
     [SerializeField] TMP_InputField loginIdField;
     [SerializeField] TMP_InputField loginPwField;
-
+    //UI Panel
     [SerializeField] GameObject uiRegisterPanel;
     [SerializeField] GameObject uiLoginPanel;
-    // bool isRegisterComplete =false;
-    // bool isLoginComplete =false;
+    
     string[] armName = { "라그나 블레이드 ", "파멸의 도끼", "그림자 숨결" };
     string[] armType = { "검", "도끼", "대거" };
     int[] armAtkVal = { 20, 40, -10 };
     int[] armAtkSpeedVal = { 0, -100, 400 };
-
-
-    //string gameServerUrl = "http://localhost:4416"; 테스트용서버 주소
     string gameServerUrl = "https://192.168.0.39:4416"; //블루스택용 서버 주소
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-   
     public void QuickLogin()
     {
         uiRegisterPanel.SetActive(false);
@@ -44,12 +35,11 @@ public class ServerConnect : MonoBehaviour
     }
     public async void RegisterInfoSeq()
     {
-
-
         if (registerIdField.text == "" || registerEmailField.text == "" || registerpasswdField.text == "")
         {
             return;
         }
+
         await SetUserInfoAsync(registerIdField.text, registerpasswdField.text, registerEmailField.text);
 
         for (int i = 0; i < 3; i++)
@@ -59,8 +49,8 @@ public class ServerConnect : MonoBehaviour
 
         uiRegisterPanel.SetActive(false);
         uiLoginPanel.SetActive(true);
-
     }
+
     class BypassCertificateHandler : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
@@ -71,8 +61,6 @@ public class ServerConnect : MonoBehaviour
 
     public async void SetCharacterInitialInfo()
     {
-
-
         if (loginIdField.text == "" || loginPwField.text == "")
         {
             return;
@@ -103,8 +91,6 @@ public class ServerConnect : MonoBehaviour
             {
                 await GetUserItemAsync(loginIdField.text);
             }
-
-            // 제이슨 뜯어서 아이디 비밀번호 맞으면  아이템 제공하고 씬 넘김
         }
     }
 
@@ -114,12 +100,10 @@ public class ServerConnect : MonoBehaviour
         string serverTaskUrl = $"{gameServerUrl}/item/{ownerId}";
 
         var request = UnityWebRequest.Get(serverTaskUrl);
-
-
         request.certificateHandler = new BypassCertificateHandler();
         request.timeout = 10;
-        await request.SendWebRequest().ToUniTask();
 
+        await request.SendWebRequest().ToUniTask();
 
         if (request.result != UnityWebRequest.Result.Success)
         {
@@ -127,9 +111,7 @@ public class ServerConnect : MonoBehaviour
         }
         else
         {
-
             string wrappedJson = "{\"jArmItems\":" + request.downloadHandler.text + "}";
-
 
             JsonArmListWrapper result = JsonUtility.FromJson<JsonArmListWrapper>(wrappedJson);
 
@@ -137,7 +119,8 @@ public class ServerConnect : MonoBehaviour
             {
                 foreach (var arm in result.jArmItems)
                 {
-                    JsonArmItem setArmItem = new JsonArmItem(arm.arm_name, arm.arm_type, arm.arm_atk_bonus_val, arm.arm_atkSpeed_bonus_val, arm.owner_id);
+                    JsonArmItem setArmItem = new JsonArmItem(arm.arm_name, arm.arm_type, arm.arm_atk_bonus_val,
+                        arm.arm_atkSpeed_bonus_val, arm.owner_id);
 
                     armDataListSO.armItems.Add(setArmItem);
                 }
@@ -150,16 +133,14 @@ public class ServerConnect : MonoBehaviour
             await UniTask.Delay(200);
 
             SceneManager.LoadScene(2);
-
         }
     }
 
     public async UniTask SetUserInfoAsync(string user_id, string user_pw, string user_email)
     {
         var userJson = JsonUtility.ToJson(new JsonUser(user_id, user_pw, user_email));
-        Debug.Log(userJson);
-        var request = new UnityWebRequest($"{gameServerUrl}/user", "POST");
 
+        var request = new UnityWebRequest($"{gameServerUrl}/user", "POST");
         request.certificateHandler = new BypassCertificateHandler();
         request.timeout = 10;
 
@@ -176,12 +157,13 @@ public class ServerConnect : MonoBehaviour
             Debug.Log("아이템 정보: " + request.downloadHandler.text);
     }
 
-
-    public async UniTask PresentUserItemAsync(string arm_name, string arm_type, int arm_atk_bonus_val, int arm_atkSpeed_bonus_val, string owner_id)
+    public async UniTask PresentUserItemAsync(string arm_name, string arm_type, int arm_atk_bonus_val,
+        int arm_atkSpeed_bonus_val, string owner_id)
     {
-        var userJson = JsonUtility.ToJson(new JsonArmItem(arm_name, arm_type, arm_atk_bonus_val, arm_atkSpeed_bonus_val, owner_id));
+        var userJson =
+            JsonUtility.ToJson(new JsonArmItem(arm_name, arm_type, arm_atk_bonus_val, arm_atkSpeed_bonus_val,
+                owner_id));
         var request = new UnityWebRequest($"{gameServerUrl}/armItem", "POST");
-
         request.certificateHandler = new BypassCertificateHandler();
         request.timeout = 10;
 
@@ -199,14 +181,11 @@ public class ServerConnect : MonoBehaviour
     }
 
     [System.Serializable]
-
     public class JsonUser
     {
-
         public string user_id;
         public string user_pw;
         public string user_email;
-
 
         public JsonUser(string user_id, string user_pw, string user_email)
         {
@@ -214,8 +193,8 @@ public class ServerConnect : MonoBehaviour
             this.user_pw = user_pw;
             this.user_email = user_email;
         }
-
     }
+
     [System.Serializable]
     public class JsonArmItem
     {
@@ -225,7 +204,8 @@ public class ServerConnect : MonoBehaviour
         public int arm_atkSpeed_bonus_val;
         public string owner_id;
 
-        public JsonArmItem(string arm_name, string arm_type, int arm_atk_bonus_val, int arm_atkSpeed_bonus_val, string owner_id)
+        public JsonArmItem(string arm_name, string arm_type, int arm_atk_bonus_val, int arm_atkSpeed_bonus_val,
+            string owner_id)
         {
             this.arm_name = arm_name;
             this.arm_type = arm_type;

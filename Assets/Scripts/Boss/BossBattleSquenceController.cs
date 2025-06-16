@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
 using UnityEngine;
 
 public class BossBattleSquenceController : MonoBehaviour
@@ -17,9 +16,7 @@ public class BossBattleSquenceController : MonoBehaviour
     bool isBossWatch;
     private bool isGameEndSequnceOn;
     public bool isPlayerWin = false;
-    public bool isTimeOverLose = false;// 시간 초과 패 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public bool isTimeOverLose = false;
     private void Start()
     {
         bossGenerateController = FindAnyObjectByType<BossGenerateController>();
@@ -29,18 +26,16 @@ public class BossBattleSquenceController : MonoBehaviour
         gameUIController = FindAnyObjectByType<GameUIController>();
         stageController = FindAnyObjectByType<StageController>();
         timerController = FindAnyObjectByType<TimerController>();
-
     }
+    
     private async void Update()
     {
-
-
         if ((isTimeOverLose || isPlayerWin) && gameFlowController.gameState == GameFlowState.Field)
         {
             await GameEndSequence();
         }
-
     }
+    
     public void PlayerArrivalCheck(bool setArrival)
     {
         if (setArrival)
@@ -48,18 +43,13 @@ public class BossBattleSquenceController : MonoBehaviour
             isPlayerArrived = true;
         }
     }
-
-
-
-
-
+    
     public void BossWatchPlayerCheck(bool setWatch)
     {
         if (setWatch)
         {
             isBossWatch = true;
         }
-
         else
         {
             isBossWatch = false;
@@ -72,7 +62,6 @@ public class BossBattleSquenceController : MonoBehaviour
         {
             return true;
         }
-
         else
         {
             return false;
@@ -82,11 +71,10 @@ public class BossBattleSquenceController : MonoBehaviour
     public void SequnceBossToCamera()
     {
         bossMoveController = FindAnyObjectByType<BossMoveController>();
-        if (bossMoveController.isBossAppeared)// 보스가 등장하면 
+        if (bossMoveController.isBossAppeared)
         {
-            cameraController.isBossCameraMode = true; // 카메라  시점을 바꾼다.
+            cameraController.isBossCameraMode = true;
         }
-
     }
 
     public Vector2 GetBossPosition()
@@ -100,11 +88,9 @@ public class BossBattleSquenceController : MonoBehaviour
         cameraController.isBossCameraMode = false;
         playerManager.isPlayerBossBattleMode = true;
     }
-
-
+    
     async UniTask GameEndSequence()
     {
-        Debug.Log("보스 사망 후처리 시작");
         if (isGameEndSequnceOn)
         {
             return;
@@ -116,21 +102,17 @@ public class BossBattleSquenceController : MonoBehaviour
 
         if (isPlayerWin)
         {
-            string rsltTxt = "미션 클리어";
+            string rsltTxt = "???? ??!";
             stageController.ResultStageUIOn(rsltTxt);
             await UniTask.Delay(1000);
             stageController.ResultStageUIOff();
-
             stageController.goToNextSubStage();
-
             bossGenerateController.UpdgradeBossDefenceStatus();
-
         }
 
         if (isTimeOverLose)
         {
-            Debug.Log("실패 종료시퀀스  확인 ");
-            string rsltTxt = "미션실패...";
+            string rsltTxt = "?? ??";
             stageController.ResultStageUIOn(rsltTxt);
             await UniTask.Delay(1000);
             stageController.ResultStageUIOff();
@@ -150,6 +132,5 @@ public class BossBattleSquenceController : MonoBehaviour
 
         await UniTask.Delay(1000);
         isGameEndSequnceOn = false;
-
     }
 }

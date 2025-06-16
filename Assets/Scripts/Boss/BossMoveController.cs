@@ -5,13 +5,11 @@ using UnityEngine.UIElements;
 public class BossMoveController : MonoBehaviour
 {
     Animator bossAnimator;
-
-    public GameObject player;
+    
     public GameObject bossAtkObject;
 
     private float attackDistance;
-    public int Hp = 1000;
-
+   
     PlayerManager playerManager;
     BossBattleSquenceController bossBattleSquenceController;
     GameUIController gameUIController;
@@ -19,10 +17,6 @@ public class BossMoveController : MonoBehaviour
     private bool isAttacking = false;
     bool isBossDying = false;
     public bool isBossAppeared = false;
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isBossAppeared = true;
@@ -31,8 +25,7 @@ public class BossMoveController : MonoBehaviour
         gameUIController = FindAnyObjectByType<GameUIController>();
         playerManager = FindAnyObjectByType<PlayerManager>();
         bossAnimator = GetComponent<Animator>();
-
-
+        
         attackDistance = 2.0f;
     }
 
@@ -60,41 +53,41 @@ public class BossMoveController : MonoBehaviour
 
     async UniTask BossAttack()
     {
-
         bossBattleSquenceController.BossWatchPlayerCheck(true);
+        
         if (!bossBattleSquenceController.isBattleStartCondition() || this.gameObject == null)
         {
             return;
         }
-
-
         if (isAttacking)
         {
             return;
         }
+        
         isAttacking = true;
-        Debug.Log("반복체크 중");
+        
         bossAnimator.SetTrigger("Attack");
         await UniTask.Delay(300);
+        
         bossAtkObject.SetActive(true);
         await UniTask.Delay(1000);
+        
         bossAtkObject.SetActive(false);
         await UniTask.Delay(100);
+        
         isAttacking = false;
 
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("보스 골렘 충돌 감지 확인");
-
-        if (collision.gameObject.name.Equals("PlayerAttack"))
-        {
-            Debug.Log("충돌 감지 확인");
-
-        }
-    }
-
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     Debug.Log("보스 골렘 충돌 감지 확인");
+    //
+    //     if (collision.gameObject.name.Equals("PlayerAttack"))
+    //     {
+    //         Debug.Log("충돌 감지 확인");
+    //
+    //     }
+    // }
     async UniTask BossDieSequence()
     {
         if (this.gameObject == null)

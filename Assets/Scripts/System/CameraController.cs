@@ -16,30 +16,22 @@ public class CameraController : MonoBehaviour
     public bool isBossCameraSequenceStart;
 
     BossBattleSquenceController bossBattleSquenceController;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         bossBattleSquenceController = FindAnyObjectByType<BossBattleSquenceController>();
 
     }
-
-    // Update is called once per frame
     async void LateUpdate()
     {
-        if (isBossCameraMode)// 보스 좀 비춰주세요 
+        if (isBossCameraMode)
         {
             await BossCameraMode();
         }
-
         else
         {
-
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(Player.transform.position.x, Player.transform.position.y, -10), ref CameraSdVel, CameraSpeed * Time.deltaTime);
-
         }
     }
-
     async UniTask BossCameraMode()
     {
         if (isBossCameraSequenceStart)
@@ -52,11 +44,11 @@ public class CameraController : MonoBehaviour
 
         transform.DOMove(new Vector3(bossPostion.x, bossPostion.y, -10), 0.7f);
         await UniTask.Delay(1000);
+        
         transform.DOMove(new Vector3(Player.transform.position.x, Player.transform.position.y, -10), 0.7f);
         await UniTask.Delay(1000);
 
         bossBattleSquenceController.SequeneceCameraToPlayer();
         isBossCameraSequenceStart = false;
-
     }
 }

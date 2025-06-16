@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BossGenerateController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public TextMeshProUGUI bossApearTxt;
     public GameObject[] bossMobPrfab;
     public GameObject gamePlayer;
@@ -16,17 +15,14 @@ public class BossGenerateController : MonoBehaviour
     StageController stageController;
     GameUIController gameUIController;
 
-    string bossAppearString = "보스등장!";
+    string bossAppearString = "보스 등장!";
 
     public bool isBossTime = false;
     public bool isBossSpawn = false;
 
     int bossDefenceStatus = 20;
-
-
     public void Start()
     {
-        // gameObject.SetActive(true);
         bossVectorOffset = new Vector3(6f, 0f, 0);
         gameUIController = FindAnyObjectByType<GameUIController>();
         stageController = FindAnyObjectByType<StageController>();
@@ -47,11 +43,6 @@ public class BossGenerateController : MonoBehaviour
         int spawnBossIndex = stageController.getMainStageValue() - 1;
         Instantiate(bossMobPrfab[spawnBossIndex], gamePlayer.transform.position + bossVectorOffset, Quaternion.identity);
     }
-
-
-
-
-
     async UniTask ShowBossAppearText()
     {
         bossApearTxt.text = "";
@@ -65,13 +56,10 @@ public class BossGenerateController : MonoBehaviour
 
         bossApearTxt.gameObject.SetActive(false);
     }
-
-
     public void UpdgradeBossDefenceStatus()
     {
         bossDefenceStatus = bossDefenceStatus + 10;
     }
-
     public int GetBossDefenceStatusValue()
     {
         return bossDefenceStatus;

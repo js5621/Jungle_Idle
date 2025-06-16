@@ -1,26 +1,26 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-
-
-
 public class FiedMonsterController : MonoBehaviour
 {
     bool isDamgeSquenceOn;
     bool isDamgeSquenceOff;
+    
     Animator monsterAnimator;
     int monsterHp = 1;
     private float speed = 0.5f;
+    
     private Vector2 moveTarget;
     private Vector2 position;
+    
     private bool isWalk;
     private bool isAttacking = false;
     public bool isMonSterDie = false;
+    
     private float moveableDistance = 0.3f;
-    FieldStandardBattleController fieldStandardBattleController;
+
     PlayerManager playerManager;
     Vector3 initialLocalScale;
     public BossGenerateController bossController;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         monsterAnimator = GetComponent<Animator>();
@@ -31,9 +31,8 @@ public class FiedMonsterController : MonoBehaviour
         initialLocalScale = gameObject.transform.localScale;
         bossController = FindAnyObjectByType<BossGenerateController>();
     }
-
-    // Update is called once per frame
-    async void Update()
+    
+    void Update()
     {
         if (!bossController.isBossTime)
         {
@@ -50,36 +49,20 @@ public class FiedMonsterController : MonoBehaviour
 
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
-        Debug.Log("충돌감지");
         if (collision.gameObject.name.Equals("PlayerAttack"))
         {
-
             if (monsterHp > 0)
             {
-                //KnockBack();
-
-
-                Debug.Log("피격 판정");
                 monsterAnimator.SetTrigger("Damage");
                 monsterHp -= 1;
                 if (monsterHp <= 0)
                 {
-                    Debug.Log("사망");
                     monsterAnimator.SetTrigger("Die");
                     isMonSterDie = true;
-                    Destroy(this.gameObject, 1f);
+                    Destroy(gameObject, 1f);
                 }
-            }
-
-            else
-            {
-
-
             }
         }
     }
@@ -93,32 +76,26 @@ public class FiedMonsterController : MonoBehaviour
             monsterAnimator.SetBool("IsWalk", true);// move sprite towards the target location
             transform.position = Vector2.MoveTowards(transform.position, moveTarget, step);
         }
-
         else
         {
-
-
-
-            if (this.transform != null)
+            if (transform != null)
             {
                 if (!isMonSterDie)
                 {
                     await AttackSequence();
                 }
-
             }
-
         }
     }
-
     async UniTask AttackSequence()
     {
         if (isAttacking)
         {
             return;
         }
+        
         isAttacking = true;
-        monsterAnimator.SetBool("IsWalk", false);// move sprite towards the target location
+        monsterAnimator.SetBool("IsWalk", false);
         monsterAnimator.SetTrigger("Attack");
         await UniTask.Delay(700);
         isAttacking = false;
@@ -129,17 +106,13 @@ public class FiedMonsterController : MonoBehaviour
         float step = speed * Time.deltaTime;
         if (transform.localScale.x > 0f)
         {
-            Debug.Log("넉백 판정 전 :" + transform.position);
             Vector2 knockbackPosition = (Vector2)transform.position + Vector2.right * 5f;
             transform.position = Vector2.MoveTowards(transform.position, knockbackPosition, step);
-            Debug.Log("넉백 판정 후:" + transform.position);
         }
         else
         {
-            Debug.Log("넉백 판정 전 :" + transform.position);
             Vector2 knockbackPosition = (Vector2)transform.position + Vector2.left * 5f;
             transform.position = Vector2.MoveTowards(transform.position, knockbackPosition, step);
-            Debug.Log("넉백 판정 후:" + transform.position);
         }
 
     }
@@ -157,30 +130,4 @@ public class FiedMonsterController : MonoBehaviour
         }
     }
 }
-
-
-
-//async UniTask GotDamage()
-//{
-//    isDamgeSquenceOn = false;
-//    monsterHp -= 1;
-//    if (monsterHp <= 0)
-//    {
-//        await UniTask.Delay(100);
-//        monsterAnimator.SetTrigger("Die");
-//        await UniTask.Delay(500);
-//        Destroy(this);
-//    }
-
-//    else
-//    {
-//        monsterAnimator.SetTrigger("Damage");
-//        await UniTask.Delay(500);
-//        isDamgeSquenceOff = true;
-//    }
-
-
-
-
-//}
 

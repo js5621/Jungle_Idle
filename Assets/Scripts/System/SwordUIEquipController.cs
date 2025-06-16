@@ -2,17 +2,13 @@ using UnityEngine;
 
 public class SwordUIEquipController : MonoBehaviour
 {
-    [SerializeField]
-    GameObject swordUIPanel;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] GameObject swordUIPanel;
     public void SwordUIOn()
     {
         swordUIPanel.SetActive(true);
     }
-
     public void SwordUIOff()
     {
         swordUIPanel.SetActive(false);
     }
-
 }
