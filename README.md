@@ -14,8 +14,6 @@
 
 ### 프로젝트의 구조 및 흐름
 
-![로그인 아키텍쳐.png](attachment:82eccacd-ae52-48ce-98c0-e17c45a6e27d:로그인_아키텍쳐.png)
-
 - **구조 개요**
     - **Unity**: 클라이언트 (게임 화면 및 사용자 인터페이스)
     - **Node.js**: 중간 API 서버 (Unity ↔ MySQL 중계)
